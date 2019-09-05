@@ -6,7 +6,7 @@
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/03 03:23:57 by xenomorph         #+#    #+#             */
-/*   Updated: 2019/09/04 17:17:18 by rdremora         ###   ########.fr       */
+/*   Updated: 2019/09/05 18:22:47 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 typedef struct		s_tetr
 {
-	char			*chunk;
-	char			letter;
-	struct s_tetr	*next;
+	char			*chunk; /* Изображение тетромино */
+	char			letter; /* Буква, которой обозначается тетромино*/
+	struct s_tetr	*next;  /* Ссылка на следующий элемент */
 }					t_tetr;
 
 typedef struct		s_map
@@ -52,7 +52,9 @@ void				ft_bruteforce(t_tetr *head);
 size_t				ft_findmapsize(size_t tetroscount);
 size_t				ft_gettetrmaxdmnsn(char *chunk, size_t i);
 size_t				ft_lstlen(t_tetr *head);
-t_map				*ft_placetetr(t_map *map, t_tetr *tet,
+//t_map				*ft_placetetr(t_map *map, t_tetr *tet,
+//size_t x_m, size_t y_m);
+void				ft_placetetr(t_map *map, t_tetr *tet,
 size_t x_m, size_t y_m);
 size_t				ft_checkplacement(t_map *map, t_tetr *tet,
 size_t x_m, size_t y_m);

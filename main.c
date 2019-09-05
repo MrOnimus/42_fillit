@@ -6,7 +6,7 @@
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:10:50 by rdremora          #+#    #+#             */
-/*   Updated: 2019/09/01 16:12:58 by rdremora         ###   ########.fr       */
+/*   Updated: 2019/09/05 18:19:11 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,18 @@ int		main(void)	// TO TEST ft_inserttetrotomap
 	t_tetr	*head;
 
 	head = (t_tetr*)malloc(sizeof(t_tetr));
-	head->chunk = "00102030\0";
+	head->chunk = "00011121\0";
 	head->letter = 'A';
 	head->next = (t_tetr*)malloc(sizeof(t_tetr));
-	head->next->chunk = "00102030\n";
+	head->next->chunk = "00010203\0";
 	head->next->letter = 'B';
-	head->next->next = NULL;
+	head->next->next = (t_tetr*)malloc(sizeof(t_tetr));
+	head->next->next->chunk = "00101112\0";
+	head->next->next->letter = 'C';
+	head->next->next->next = (t_tetr*)malloc(sizeof(t_tetr));
+	head->next->next->next->chunk = "00011112";
+	head->next->next->next->letter = 'D';
+	head->next->next->next->next = NULL;
 	ft_bruteforce(head);
 }
 

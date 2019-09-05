@@ -6,7 +6,7 @@
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 15:40:44 by rdremora          #+#    #+#             */
-/*   Updated: 2019/09/04 17:30:24 by rdremora         ###   ########.fr       */
+/*   Updated: 2019/09/05 18:15:33 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,50 +53,58 @@ size_t	ft_checkplacement(t_map *map, t_tetr *tet, size_t x_m, size_t y_m)
 	i = 0;
 	while (tet->chunk[i])
 	{
-		if ((size_t)tet->chunk[i] - (size_t)'0' < map->size &&
-		(size_t)tet->chunk[i + 1] - (size_t)'0' < map->size)
-			if (map->chunk[tet->chunk[i] - '0'][tet->chunk[i + 1] - '0'] != '.')
-				return (NULL);
+		if (y_m + (size_t)tet->chunk[i] - (size_t)'0' < map->size &&
+		x_m + (size_t)tet->chunk[i + 1] - (size_t)'0' < map->size)
+		{
+			if (map->chunk[y_m + tet->chunk[i] - '0']
+			[x_m + tet->chunk[i + 1] - '0'] != '.')
+				return (0);
+		}
+		else
+			return (0);
 		i += 2;
 	}
-	if (tet->chunk[i])
-		return (NULL);
 	return (1);
 }
 
-t_map	*ft_placetetr(t_map *map, t_tetr *tet, size_t x_m, size_t y_m)
+void	ft_placetetr(t_map *map, t_tetr *tet, size_t x_m, size_t y_m)
 {
+	size_t	i;
 
+	i = 0;
+	while (tet->chunk[i])
+	{
+		if ((size_t)tet->chunk[i] - (size_t)'0' < map->size &&
+		(size_t)tet->chunk[i + 1] - (size_t)'0' < map->size)
+			if (map->chunk[y_m + tet->chunk[i] - '0']
+			[x_m + tet->chunk[i + 1] - '0'] == '.')
+				map->chunk[y_m + tet->chunk[i] - '0']
+				[x_m + tet->chunk[i + 1] - '0'] =
+				tet->letter;
+		i += 2;
+	}
 }
 
 t_map	*ft_inserttetros(t_map *map, t_tetr *tet, size_t x_m, size_t y_m)
 {
-	size_t	i;
-
 	if (!map || map->size < 2)
 		return (NULL);
 	if (!tet)
 		return (map);
 	if (ft_checkplacement(map, tet, x_m, y_m))
 	{
-		map = ft_placetetr(map, tet, x_m, y_m);
+		ft_placetetr(map, tet, x_m, y_m);
+		return (ft_inserttetros(map, tet->next, 0, 0));
 	}
 	else
-		return (NULL);
-	/*while (tet->chunk[(i += 2)])
 	{
-		if ((size_t)tet->chunk[i] - (size_t)'0' < map->size &&
-		(size_t)tet->chunk[i + 1] - (size_t)'0' < map->size)
-			if (map->chunk[tet->chunk[i] - '0'][tet->chunk[i + 1] - '0'] == '.')
-				map->chunk[tet->chunk[i] - '0'][tet->chunk[i + 1] - '0'] =
-				tet->letter;
-	}*/
-	if ((x_m == map->size && y_m == map->size))
-		return (ft_inserttetros(map, tet->next, 0, 0));
-	else if (x_m == map->size)
-		return (ft_inserttetros(map, tet, 0, ++y_m));
-	else
-		return (ft_inserttetros(map, tet, ++x_m, y_m));
+		if (x_m == map->size - 1 && y_m == map->size - 1)
+			return (NULL);
+		else if (x_m == map->size)
+			return (ft_inserttetros(map, tet, (x_m == 0), ++y_m));
+		else
+			return (ft_inserttetros(map, tet, ++x_m, y_m));
+	}
 }
 
 void	ft_bruteforce(t_tetr *head)
