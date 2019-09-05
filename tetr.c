@@ -6,7 +6,7 @@
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:10:31 by rdremora          #+#    #+#             */
-/*   Updated: 2019/09/01 16:38:01 by rdremora         ###   ########.fr       */
+/*   Updated: 2019/09/04 17:08:21 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ size_t	ft_lstlen(t_tetr *head)
 	return (len * 4);
 }
 
-size_t				ft_findmapsize(size_t tetroscount)
+size_t	ft_findmapsize(size_t tetroscount)
 {
 	size_t	i;
 

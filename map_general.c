@@ -6,13 +6,29 @@
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 18:10:53 by rdremora          #+#    #+#             */
-/*   Updated: 2019/09/04 15:33:50 by rdremora         ###   ########.fr       */
+/*   Updated: 2019/09/04 15:55:05 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-void	ft_printmap(char **map)
+char	*ft_mapstrnew(size_t size)
+{
+	char	*mem;
+	size_t	size_l;
+	size_t	i;
+
+	size_l = (size_t)size;
+	if (!(mem = (char*)malloc((size_l + 1) * sizeof(char))))
+		return (NULL);
+	i = 0;
+	while (i < size)
+		mem[i++] = '.';
+	mem[size] = '\0';
+	return (mem);
+}
+
+/*void	ft_printmap(char **map)
 {
 	size_t	i;
 
@@ -36,22 +52,6 @@ void	ft_clearmap(char **map)
 	map = NULL;
 }
 
-char	*ft_mapstrnew(size_t size)
-{
-	char	*mem;
-	size_t	size_l;
-	size_t	i;
-
-	size_l = (size_t)size;
-	if (!(mem = (char*)malloc((size_l + 1) * sizeof(char))))
-		return (NULL);
-	i = 0;
-	while (i < size)
-		mem[i++] = '.';
-	mem[size] = '\0';
-	return (mem);
-}
-
 char	**ft_initmap(char **map, size_t size)
 {
 	size_t			i;
@@ -68,11 +68,11 @@ char	**ft_initmap(char **map, size_t size)
 	while (i < size)
 		map[i++] = ft_mapstrnew((size_t)size);
 	return (map);
-}
+}*/
 
 // ALL THAT'S UP IS PERFECTLY WORKING
 
-/*t_map	*ft_initmap(t_map *map, size_t size)
+t_map	*ft_initmap(t_map *map, size_t size)
 {
 	size_t			i;
 
@@ -96,14 +96,14 @@ char	**ft_initmap(char **map, size_t size)
 	return (map);
 }
 
-void	ft_printmap(char **chunk)
+void	ft_printmap(t_map *map)
 {
 	size_t	i;
 
 	i = 0;
-	while (chunk[i])
+	while (map->chunk[i])
 	{
-		ft_putstr(chunk[i++]);
+		ft_putstr(map->chunk[i++]);
 		ft_putchar('\n');
 	}
 }
@@ -120,4 +120,4 @@ void	ft_clearmap(t_map *map)
 	map->chunk = NULL;
 	free(map);
 	map = NULL;
-}*/
+}
