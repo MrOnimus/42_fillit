@@ -5,26 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rdremora <rdremora@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/03 03:23:57 by xenomorph         #+#    #+#             */
-/*   Updated: 2019/09/04 17:17:18 by rdremora         ###   ########.fr       */
+/*   Created: 2019/09/18 15:41:18 by dbutterw          #+#    #+#             */
+/*   Updated: 2019/09/28 22:15:20 by rdremora         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_FILLIT_H
-# define FT_FILLIT_H
+#ifndef FILLIT_H
+# define FILLIT_H
+# include "../libft/libft.h"
+# include <fcntl.h>
+# define EL_MAX 26
 
-# include <stdlib.h>
-# include <stdio.h>
-# include <string.h>
-# include <unistd.h>
-# include "libft.h"
-
-typedef struct		s_tetr
+typedef struct		s_elems
 {
-	char			*chunk;
+	char			*coords;
 	char			letter;
-	struct s_tetr	*next;
-}					t_tetr;
+	size_t			height;
+	size_t			width;
+	struct s_elems	*next;
+}					t_elems;
 
 typedef struct		s_map
 {
@@ -32,29 +31,29 @@ typedef struct		s_map
 	size_t			size;
 }					t_map;
 
-void				ft_optimtetr(char **m_chunk);
-void				ft_minimizetetr(char **chunk);
+int					ft_read_elems(t_elems **elems, int fd);
+int					ft_valid_elem(char *grid);
+void				ft_free_elems(t_elems **elems);
+void				ft_rev_elems(t_elems **elems);
 
-//void				ft_clearmap(char **map);
-//char				**ft_initmap(char **map, size_t size);
-//void				ft_printmap(char **map);
+char				*ft_get_coords(const char *grid);
+size_t				ft_getdimension(char *coords, size_t i);
+size_t				ft_getmax(size_t a, size_t b);
+void				ft_adddimensions(t_elems *tet);
 
 t_map				*ft_initmap(t_map *map, size_t size);
 void				ft_printmap(t_map *map);
 void				ft_clearmap(t_map *map);
-
-//char				**ft_inserttetros(char **map, size_t map_size,
-//t_tetr *tet, size_t x_m, size_t y_m);
-t_map				*ft_inserttetros(t_map *map, t_tetr *tet,
-size_t x_m, size_t y_m);
-char				*ft_mapstrnew(size_t size);
-void				ft_bruteforce(t_tetr *head);
 size_t				ft_findmapsize(size_t tetroscount);
+
+int					ft_inserttetros(t_map *map, t_elems *tet);
+char				*ft_mapstrnew(size_t size);
+void				ft_bruteforce(t_elems *head, int len);
 size_t				ft_gettetrmaxdmnsn(char *chunk, size_t i);
-size_t				ft_lstlen(t_tetr *head);
-t_map				*ft_placetetr(t_map *map, t_tetr *tet,
+void				ft_placetetr(t_map *map, t_elems *tet,
 size_t x_m, size_t y_m);
-size_t				ft_checkplacement(t_map *map, t_tetr *tet,
+size_t				ft_checkplacement(t_map *map, t_elems *tet,
 size_t x_m, size_t y_m);
+void				ft_deltetr(t_map *map, t_elems *tet);
 
 #endif
